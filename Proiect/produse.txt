@@ -1,0 +1,9 @@
+8
+Tableta;Nurofen;Reckitt;35;Ibuprofen;DA;400
+Produs;Scutec;Pampers;15
+Cosmetic;Gel purifiant;Effaclar;55;Fata
+Produs;Servetele;Zewa;3
+Unguent;Fucidin;Leo;20;Acid fusidic;NU;12
+Medicament;Breezhaler;Atectura;40;Indacaterol;DA
+Naturist;Spirulina;Hofigal;80;Energizant
+Sirop;Calmotusin;Alevia;15;Helichrysum;NU;12.75
