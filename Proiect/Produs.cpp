@@ -96,7 +96,7 @@ void Produs::initializare(RBTree* tree) {
 	in.close();
 }
 
-void Produs::adaugare(vector<Produs*>& tab) {
+void Produs::adaugare(RBTree* tree) {
 	string tip, nume, producator, aux1, aux2;
 	int pret, gramaj, val;
 	double c;
@@ -120,8 +120,9 @@ void Produs::adaugare(vector<Produs*>& tab) {
 	if (!(cin >> pret))
 		eroare(pret);
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 	if (tip == "PRODUS") {
-		tab.push_back(new Produs(nume, producator, pret));
+		tree->RBInsert(tree->createNode(new Produs(nume, producator, pret)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "COSMETICE") {
@@ -132,7 +133,7 @@ void Produs::adaugare(vector<Produs*>& tab) {
 				break;
 			cout << "Zona de aplicare: ";
 		}
-		//tab.push_back(new Cosmetice(nume, producator, pret, aux1));
+		tree->RBInsert(tree->createNode(new Cosmetice(nume, producator, pret, aux1)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "NATURISTE") {
@@ -143,7 +144,7 @@ void Produs::adaugare(vector<Produs*>& tab) {
 				break;
 			cout << "Utilizarea produsului naturist: ";
 		}
-		//tab.push_back(new Naturiste(nume, producator, pret, aux1));
+		tree->RBInsert(tree->createNode(new Naturiste(nume, producator, pret, aux1)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "MEDICAMENT") {
@@ -160,7 +161,7 @@ void Produs::adaugare(vector<Produs*>& tab) {
 			if (aux2 == "DA" || aux2 == "NU")
 				break;
 		}
-		//tab.push_back(new Medicament(nume, producator, pret, aux1, aux2 == "DA"));
+		tree->RBInsert(tree->createNode(new Medicament(nume, producator, pret, aux1, aux2 == "DA")));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "TABLETA") {
@@ -181,7 +182,7 @@ void Produs::adaugare(vector<Produs*>& tab) {
 		if (!(cin >> gramaj))
 			eroare(gramaj);
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		//tab.push_back(new Tableta(nume, producator, pret, aux1, aux2 == "DA", gramaj));
+		tree->RBInsert(tree->createNode(new Tableta(nume, producator, pret, aux1, aux2 == "DA", gramaj)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "SIROP") {
@@ -203,7 +204,7 @@ void Produs::adaugare(vector<Produs*>& tab) {
 		if (!(cin >> c))
 			eroare(c);
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		//tab.push_back(new Sirop(nume, producator, pret, aux1, aux2 == "DA", c));
+		tree->RBInsert(tree->createNode(new Sirop(nume, producator, pret, aux1, aux2 == "DA", c)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 	else if (tip == "UNGUENT") {
@@ -225,15 +226,17 @@ void Produs::adaugare(vector<Produs*>& tab) {
 		if (!(cin >> val))
 			eroare(val);
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		//tab.push_back(new Unguent(nume, producator, pret, aux1, aux2 == "DA", val));
+		tree->RBInsert(tree->createNode(new Unguent(nume, producator, pret, aux1, aux2 == "DA", val)));
 		cout << "\n\u001b[32mProdusul a fost adaugat cu succes!\u001b[0m\n";
 	}
 }
 
-void Produs::modificare(vector<Produs*>& tab) {
-	/*int pret, gramaj, val;
+void Produs::modificare(RBTree* tree) {
+	int pret, gramaj, val;
 	double c;
+	RBNode* node;
 	string nume, producator, aux1, aux2;
+
 	cout << "Introduceti denumirea produsului: ";
 	while (true) {
 		getline(cin, nume);  transform(nume.begin(), nume.end(), nume.begin(), tolower); nume[0] = (char)toupper(nume[0]);
@@ -241,215 +244,229 @@ void Produs::modificare(vector<Produs*>& tab) {
 			break;
 		cout << "Denumirea produsului: ";
 	}
-	for (unsigned int i = 0; i < tab.size(); i++) {
-		if (nume == tab[i]->getDenumire()) {
-			if (dynamic_cast<Tableta*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << "Noua substanta activa: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua substanta activa: ";
-				}
-				while (true) {
-					cout << "Necesita prescriptie(DA/NU): ";
-					getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
-					if (aux2 == "DA" || aux2 == "NU")
-						break;
-				}
-				cout << "Noul gramaj al tabletei: ";
-				if (!(cin >> gramaj))
-					eroare(gramaj);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				Produs* p = tab[i];
-				tab[i] = new Tableta(nume, producator, pret, aux1, aux2 == "DA", gramaj);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Sirop*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << "Noua substanta activa: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua substanta activa: ";
-				}
-				while (true) {
-					cout << "Necesita prescriptie(DA/NU): ";
-					getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
-					if (aux2 == "DA" || aux2 == "NU")
-						break;
-				}
-				cout << "Noua concentratie: ";
-				if (!(cin >> c))
-					eroare(c);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				Produs* p = tab[i];
-				tab[i] = new Sirop(nume, producator, pret, aux1, aux2 == "DA", c);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Unguent*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cin.get();
-				cout << "Noua substanta activa: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua substanta activa: ";
-				}
-				while (true) {
-					cout << "Necesita prescriptie(DA/NU): ";
-					getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
-					if (aux2 == "DA" || aux2 == "NU")
-						break;
-				}
-				cout << "Numarul de luni valabile de la deschidere: ";
-				if (!(cin >> val))
-					eroare(val);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				Produs* p = tab[i];
-				tab[i] = new Unguent(nume, producator, pret, aux1, aux2 == "DA", val);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Cosmetice*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << "Noua zona de plicare: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua zona de aplicare: ";
-				}
-				Produs* p = tab[i];
-				tab[i] = new Cosmetice(nume, producator, pret, aux1);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Naturiste*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << "Noua utilizare a produsului naturist: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua utilizare a produsului naturist: ";
-				}
-				Produs* p = tab[i];
-				tab[i] = new Naturiste(nume, producator, pret, aux1);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Medicament*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << "Noua substanta activa: ";
-				while (true) {
-					getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
-					if (aux1.size())
-						break;
-					cout << "Noua substanta activa: ";
-				}
-				while (true) {
-					cout << "Necesita prescriptie(DA/NU): ";
-					getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
-					if (aux2 == "DA" || aux2 == "NU")
-						break;
-				}
-				Produs* p = tab[i];
-				tab[i] = new Medicament(nume, producator, pret, aux1, aux2 == "DA");
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
-			else if (dynamic_cast<Produs*>(tab[i])) {
-				cout << "Noul producator al produsului: ";
-				while (true) {
-					getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
-					if (producator.size())
-						break;
-					cout << "Noul producator al produsului: ";
-				}
-				cout << "Noul pret al produsului: ";
-				if (!(cin >> pret))
-					eroare(pret);
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				Produs* p = tab[i];
-				tab[i] = new Produs(nume, producator, pret);
-				delete p;
-				cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
-				return;
-			}
+
+	node = tree->search(tree->root, nume);
+
+	if (dynamic_cast<Tableta*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
 		}
-	}*/
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Noua substanta activa: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua substanta activa: ";
+		}
+		while (true) {
+			cout << "Necesita prescriptie(DA/NU): ";
+			getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
+			if (aux2 == "DA" || aux2 == "NU")
+				break;
+		}
+		cout << "Noul gramaj al tabletei: ";
+		if (!(cin >> gramaj))
+			eroare(gramaj);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		tree->RBInsert(tree->createNode(new Tableta(nume, producator, pret, aux1, aux2 == "DA", gramaj)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Sirop*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Noua substanta activa: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua substanta activa: ";
+		}
+		while (true) {
+			cout << "Necesita prescriptie(DA/NU): ";
+			getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
+			if (aux2 == "DA" || aux2 == "NU")
+				break;
+		}
+		cout << "Noua concentratie: ";
+		if (!(cin >> c))
+			eroare(c);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		tree->RBInsert(tree->createNode(new Sirop(nume, producator, pret, aux1, aux2 == "DA", c)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Unguent*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin.get();
+		cout << "Noua substanta activa: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua substanta activa: ";
+		}
+		while (true) {
+			cout << "Necesita prescriptie(DA/NU): ";
+			getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
+			if (aux2 == "DA" || aux2 == "NU")
+				break;
+		}
+		cout << "Numarul de luni valabile de la deschidere: ";
+		if (!(cin >> val))
+			eroare(val);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		tree->RBInsert(tree->createNode(new Unguent(nume, producator, pret, aux1, aux2 == "DA", val)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Cosmetice*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Noua zona de plicare: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua zona de aplicare: ";
+		}
+
+		tree->RBInsert(tree->createNode(new Cosmetice(nume, producator, pret, aux1)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Naturiste*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Noua utilizare a produsului naturist: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua utilizare a produsului naturist: ";
+		}
+
+		tree->RBInsert(tree->createNode(new Naturiste(nume, producator, pret, aux1)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Medicament*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Noua substanta activa: ";
+		while (true) {
+			getline(cin, aux1);  transform(aux1.begin(), aux1.end(), aux1.begin(), tolower); aux1[0] = (char)toupper(aux1[0]);
+			if (aux1.size())
+				break;
+			cout << "Noua substanta activa: ";
+		}
+		while (true) {
+			cout << "Necesita prescriptie(DA/NU): ";
+			getline(cin, aux2); transform(aux2.begin(), aux2.end(), aux2.begin(), toupper);
+			if (aux2 == "DA" || aux2 == "NU")
+				break;
+		}
+
+		tree->RBInsert(tree->createNode(new Medicament(nume, producator, pret, aux1, aux2 == "DA")));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+	else if (dynamic_cast<Produs*>(node->key)) {
+		tree->del(node);
+
+		cout << "Noul producator al produsului: ";
+		while (true) {
+			getline(cin, producator);  transform(producator.begin(), producator.end(), producator.begin(), tolower); producator[0] = (char)toupper(producator[0]);
+			if (producator.size())
+				break;
+			cout << "Noul producator al produsului: ";
+		}
+		cout << "Noul pret al produsului: ";
+		if (!(cin >> pret))
+			eroare(pret);
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		tree->RBInsert(tree->createNode(new Produs(nume, producator, pret)));
+
+		cout << "\n\u001b[32mProdusul a fost modificat cu succes!\u001b[0m\n";
+		return;
+	}
+
 	cout << "\n\u001b[31mProdusul nu exista!\u001b[0m\n";
 }
 
@@ -555,22 +572,37 @@ void Produs::salvare_date(RBTree* tree) {
 	out.close();
 }
 
-bool Produs::f_producator(Produs* p, string prod) {
+bool Produs::filter_producator(Produs* p, string prod) {
 	return (p->getProducator() == prod);
 }
 
-bool Produs::f_pret(Produs* p, string pret) {
+bool Produs::filter_pret(Produs* p, string pret) {
 	return p->getPret() == stoi(pret);
 }
 
-bool Produs::filtrare(vector<Produs*> tab, string f, bool(*filtru)(Produs*, string)) {
+bool Produs::filtrare(RBTree* tree, string key, bool(* filter)(Produs*, string)) {
 	bool ok = false;
-	for (unsigned int i = 0; i < tab.size(); i++) {
-		if (filtru(tab[i], f)) {
-			cout << *tab[i] << '\n';
+	queue<RBNode*> q;
+	int i = 0;
+
+	q.push(tree->root);
+
+	while (q.empty() == false) {
+		i++;
+		RBNode* node = q.front();
+
+		if (filter(node->key, key)) {
+			cout << *node->key << '\n';
 			ok = true;
 		}
+
+		q.pop();
+		if (node->left != RBNode::Nil)
+			q.push(node->left);
+		if (node->right != RBNode::Nil)
+			q.push(node->right);
 	}
+
 	return ok;
 }
 
@@ -582,17 +614,38 @@ bool Produs::pret2(Produs* p1, Produs* p2) {
 	return (p1->getPret() > p2->getPret());
 }
 
-bool Produs::denumire1(Produs* p1, Produs* p2) {
-	return (p1->getDenumire() < p2->getDenumire());
-}
+void Produs::sortare(RBTree* tree, bool (*comparator)(Produs*, Produs*)) {
+	vector<Produs*> tab;
+	RBNode* curr, * pre;
+	int i = 1;
 
-bool Produs::denumire2(Produs* p1, Produs* p2) {
-	return (p1->getDenumire() > p2->getDenumire());
-}
+	curr = tree->root;
+	while (!tree->isNil(curr)) {
+		if (tree->isNil(curr->left)) {
+			tab.push_back(curr->key);
+			curr = curr->right;
+		}
+		else {
+			pre = curr->left;
+			while (!tree->isNil(pre->right) && pre->right != curr)
+				pre = pre->right;
 
-void Produs::sortare(vector<Produs*> tab, bool (*criteriu)(Produs*, Produs*)) {
-	sort(tab.begin(), tab.end(), criteriu);
-	//afisare_vector(tab);
+			if (tree->isNil(pre->right)) {
+				pre->right = curr;
+				curr = curr->left;
+			}
+			else {
+				pre->right = RBNode::Nil;
+				tab.push_back(curr->key);
+				curr = curr->right;
+			}
+		}
+	}
+
+	sort(tab.begin(), tab.end(), comparator);
+	for (auto it : tab) {
+		cout << i++ << ". " << *it << '\n';
+	}
 }
 
 ostream& operator<<(ostream& st, const Produs& p) {

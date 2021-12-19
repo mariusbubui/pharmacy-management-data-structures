@@ -80,7 +80,7 @@ void submenu_sort(RBTree* tree) {
         case string_code::one:
             system("cls");
             cout << "\x1B[96mProdusele sortate crescator dupa pret:\033[0m\n\n";
-            //Produs::sortare(tab, Produs::pret1);
+            Produs::sortare(tree, Produs::pret1);
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
             system("cls");
@@ -89,7 +89,7 @@ void submenu_sort(RBTree* tree) {
         case string_code::two:
             system("cls");
             cout << "\x1B[96mProdusele sortate descrescator dupa pret:\033[0m\n\n";
-            //Produs::sortare(tab, Produs::pret2);
+            Produs::sortare(tree, Produs::pret2);
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
             system("cls");
@@ -98,7 +98,7 @@ void submenu_sort(RBTree* tree) {
         case string_code::three:
             system("cls");
             cout << "\x1B[96mProdusele sortate alfabetic dupa denumire:\033[0m\n\n";
-            Produs::afisare(tree);
+            tree->inorder();
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
             system("cls");
@@ -107,7 +107,7 @@ void submenu_sort(RBTree* tree) {
         case string_code::four:
             system("cls");
             cout << "\x1B[96mProdusele sortate invers alfabetic dupa denumire:\033[0m\n\n";
-            //Produs::sortare(tab, Produs::denumire2);
+            tree->rinorder();
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
             system("cls");
@@ -119,7 +119,7 @@ void submenu_sort(RBTree* tree) {
     } while (ok);
 }
 
-void submenu_filter(vector<Produs*>& tab) {
+void submenu_filter(RBTree* tree) {
     string optiune, aux;
     bool ok = true, digit = true;
     print_submenufil();
@@ -145,7 +145,7 @@ void submenu_filter(vector<Produs*>& tab) {
             } while (!digit);
             system("cls");
             cout << "\x1B[96mProdusele cu pretul " << aux << " RON:\033[0m\n\n";
-            if (!Produs::filtrare(tab, aux, Produs::f_pret))
+            if (!Produs::filtrare(tree, aux, Produs::filter_pret))
                 cout << "\u001b[31mNu exista produse cu acest pret!\u001b[0m\n";
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
@@ -157,7 +157,7 @@ void submenu_filter(vector<Produs*>& tab) {
             getline(cin, aux);  std::transform(aux.begin(), aux.end(), aux.begin(), tolower); aux[0] = (char)toupper(aux[0]);
             system("cls");
             cout << "\x1B[96mProdusele cu producatorul " << aux << ":\033[0m\n\n";
-            if (!Produs::filtrare(tab, aux, Produs::f_producator))
+            if (!Produs::filtrare(tree, aux, Produs::filter_producator))
                 cout << "\u001b[31mNu exista produse de la acest producator!\u001b[0m\n";
             printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
             (void)_getch();
@@ -203,13 +203,13 @@ void menu()
         case string_code::two:
             system("cls");
             cout << "\x1B[96mAdaugare produs\033[0m\n\n";
-            //Produs::adaugare(tab);
+            Produs::adaugare(tree);
             revenire_meniu();
             break;
         case string_code::three:
             system("cls");
             cout << "\x1B[96mModificare produs\033[0m\n\n";
-            //Produs::modificare(tab);
+            Produs::modificare(tree);
             revenire_meniu();
             break;
         case string_code::four:
@@ -226,7 +226,7 @@ void menu()
             break;
         case string_code::six:
             system("cls");
-            //submenu_filter(tab);
+            submenu_filter(tree);
             revenire_meniu();
             break;
         case string_code::seven:

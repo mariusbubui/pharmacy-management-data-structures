@@ -145,7 +145,7 @@ void RBTree::RBInsert(RBNode* z)
     else
         y->right = z;
     z->left = z->right = RBNode::Nil;
-    z->col = RBNode::RED;
+    z->col = RBNode::color::RED;
     RBInsertFixup(z);
 }
 
@@ -170,7 +170,7 @@ RBNode* RBTree::del(RBNode* z)
         z->key = y->key;
         // copy y's satellite data into z
     }
-    if (y->col == RBNode::BLACK)
+    if (y->col == RBNode::color::BLACK)
         RBDeleteFixup(x);
     return y;
 }
@@ -178,35 +178,35 @@ RBNode* RBTree::del(RBNode* z)
 void RBTree::RBDeleteFixup(RBNode* x)
 {
     RBNode* w;
-    while ((x != root) && (x->col == RBNode::BLACK))
+    while ((x != root) && (x->col == RBNode::color::BLACK))
     {
         if (x == x->p->left)
         {
             w = x->p->right;
-            if (w->col == RBNode::RED)
+            if (w->col == RBNode::color::RED)
             {
-                w->col = RBNode::BLACK;
-                x->p->col = RBNode::RED;
+                w->col = RBNode::color::BLACK;
+                x->p->col = RBNode::color::RED;
                 LeftRotate(x->p);
                 w = x->p->right;
             }
-            if ((w->left->col == RBNode::BLACK) && (w->right->col == RBNode::BLACK))
+            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK))
             {
-                w->col = RBNode::RED;
+                w->col = RBNode::color::RED;
                 x = x->p;
             }
             else
             {
-                if (w->right->col == RBNode::BLACK)
+                if (w->right->col == RBNode::color::BLACK)
                 {
-                    w->left->col = RBNode::BLACK;
-                    w->col = RBNode::RED;
+                    w->left->col = RBNode::color::BLACK;
+                    w->col = RBNode::color::RED;
                     RightRotate(w);
                     w = x->p->right;
                 }
                 w->col = x->p->col;
-                x->p->col = RBNode::BLACK;
-                w->right->col = RBNode::BLACK;
+                x->p->col = RBNode::color::BLACK;
+                w->right->col = RBNode::color::BLACK;
                 LeftRotate(x->p);
                 x = root;
             }
@@ -215,49 +215,49 @@ void RBTree::RBDeleteFixup(RBNode* x)
         {
             // same as 'then' clause with 'right' and 'left' exchanged
             w = x->p->left;
-            if (w->col == RBNode::RED)
+            if (w->col == RBNode::color::RED)
             {
-                w->col = RBNode::BLACK;
-                x->p->col = RBNode::RED;
+                w->col = RBNode::color::BLACK;
+                x->p->col = RBNode::color::RED;
                 RightRotate(x->p);
                 w = x->p->left;
             }
-            if ((w->left->col == RBNode::BLACK) && (w->right->col == RBNode::BLACK))
+            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK))
             {
-                w->col = RBNode::RED;
+                w->col = RBNode::color::RED;
                 x = x->p;
             }
             else
             {
-                if (w->left->col == RBNode::BLACK)
+                if (w->left->col == RBNode::color::BLACK)
                 {
-                    w->right->col = RBNode::BLACK;
-                    w->col = RBNode::RED;
+                    w->right->col = RBNode::color::BLACK;
+                    w->col = RBNode::color::RED;
                     LeftRotate(w);
                     w = x->p->left;
                 }
                 w->col = x->p->col;
-                x->p->col = RBNode::BLACK;
-                w->left->col = RBNode::BLACK;
+                x->p->col = RBNode::color::BLACK;
+                w->left->col = RBNode::color::BLACK;
                 RightRotate(x->p);
                 x = root;
             }
         }
     }
-    x->col = RBNode::BLACK;
+    x->col = RBNode::color::BLACK;
 }
 
 void RBTree::RBInsertFixup(RBNode* z)
 {
-    while (z->p->col == RBNode::RED) {
+    while (z->p->col == RBNode::color::RED) {
         if (z->p == z->p->p->left)
         {
             RBNode* y = z->p->p->right;
-            if (y->col == RBNode::RED)
+            if (y->col == RBNode::color::RED)
             {
-                z->p->col = RBNode::BLACK;
-                y->col = RBNode::BLACK;
-                z->p->p->col = RBNode::RED;
+                z->p->col = RBNode::color::BLACK;
+                y->col = RBNode::color::BLACK;
+                z->p->p->col = RBNode::color::RED;
                 z = z->p->p;
             }
             else
@@ -267,19 +267,19 @@ void RBTree::RBInsertFixup(RBNode* z)
                     z = z->p;
                     LeftRotate(z);
                 }
-                z->p->col = RBNode::BLACK;
-                z->p->p->col = RBNode::RED;
+                z->p->col = RBNode::color::BLACK;
+                z->p->p->col = RBNode::color::RED;
                 RightRotate(z->p->p);
             }
         }
         else
         {
             RBNode* y = z->p->p->left;
-            if (y->col == RBNode::RED)
+            if (y->col == RBNode::color::RED)
             {
-                z->p->col = RBNode::BLACK;
-                y->col = RBNode::BLACK;
-                z->p->p->col = RBNode::RED;
+                z->p->col = RBNode::color::BLACK;
+                y->col = RBNode::color::BLACK;
+                z->p->p->col = RBNode::color::RED;
                 z = z->p->p;
             }
             else
@@ -289,23 +289,24 @@ void RBTree::RBInsertFixup(RBNode* z)
                     z = z->p;
                     RightRotate(z);
                 }
-                z->p->col = RBNode::BLACK;
-                z->p->p->col = RBNode::RED;
+                z->p->col = RBNode::color::BLACK;
+                z->p->p->col = RBNode::color::RED;
                 LeftRotate(z->p->p);
             }
         }
     }
-    root->col = RBNode::BLACK;
+    root->col = RBNode::color::BLACK;
 }
 
-void RBTree::inorder(RBNode* T)
+int RBTree::inorder(RBNode* T, int i)
 {
     if (!isNil(T))
     {
-        inorder(T->left);
-        cout << *(T->key) << '\n';
-        inorder(T->right);
+        int j = inorder(T->left, i);
+        cout << j << ". " << *(T->key) << '\n';
+        return inorder(T->right, j);
     }
+    return i+1;
 }
 
 void RBTree::inorder()
@@ -315,7 +316,28 @@ void RBTree::inorder()
         cout << "empty";
     }
     else
-        inorder(root);
+        inorder(root, 0);
+}
+
+int RBTree::rinorder(RBNode* T, int i)
+{
+    if (!isNil(T))
+    {
+        int j = rinorder(T->right, i);
+        cout << j << ". " << *(T->key) << '\n';
+        return rinorder(T->left, j);
+    }
+    return i + 1;
+}
+
+void RBTree::rinorder()
+{
+    if (isNil(root))
+    {
+        cout << "empty";
+    }
+    else
+        rinorder(root, 0);
 }
 
 void RBTree::bfs(){

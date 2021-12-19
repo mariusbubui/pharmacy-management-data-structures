@@ -19,21 +19,21 @@ public:
 	Produs(string den, string prod, int p) : denumire{ den }, producator{ prod }, pret{ p } {};
 	virtual ~Produs() {};
 	friend ostream& operator<<(ostream&, const Produs&);
+
 	static void initializare(RBTree*);
-	static void adaugare(vector<Produs*>&);
-	static void modificare(vector<Produs*>&);
+	static void adaugare(RBTree*);
+	static void modificare(RBTree*);
 	static void stergere(RBTree*);
 	static void afisare(RBTree*);
 	static void cautare(RBTree*);
-	static void sortare(vector<Produs*>, bool (*)(Produs*, Produs*));
-	static bool filtrare(vector<Produs*>, string, bool (*)(Produs*, string));
+	static void sortare(RBTree*, bool (*comparator)(Produs*, Produs*));
+	static bool filtrare(RBTree*, string, bool (*filter)(Produs*, string));
 	static void salvare_date(RBTree*);
 	static bool pret1(Produs*, Produs*);
 	static bool pret2(Produs*, Produs*);
-	static bool denumire1(Produs*, Produs*);
-	static bool denumire2(Produs*, Produs*);
-	static bool f_producator(Produs*, string);
-	static bool f_pret(Produs*, string);
+	static bool filter_producator(Produs*, string);
+	static bool filter_pret(Produs*, string);
+
 	string getDenumire() const { return this->denumire; };
 	string getProducator() const { return this->producator; };
 	int getPret() const { return this->pret; };

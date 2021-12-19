@@ -13,58 +13,62 @@ public:
 
     RBTree();
 
-    RBTree(Produs* p);
+    RBTree(Produs*);
 
     ~RBTree();
 
-    void LeftRotate(RBNode* x);
+    void LeftRotate(RBNode*);
 
     /**
      * RightRotate(y) also assumes that y is the right child of
      * an RBNode x
      */
-    void RightRotate(RBNode* y);
+    void RightRotate(RBNode*);
 
-    RBNode* createNode(Produs* p);
+    RBNode* createNode(Produs*);
 
-    bool isNil(RBNode* n);
+    bool isNil(RBNode*);
 
-    RBNode* search(RBNode* w, string key);
+    RBNode* search(RBNode*, string);
 
     /**
      * maximum(w) returns the node with maximum key in the
      * RB-tree with root node w
      */
-    RBNode* maximum(RBNode* w);
+    RBNode* maximum(RBNode*);
 
     /**
      * minimum(w) returns the node with minimum key in the
      * RB-tree with root node w
      */
-    RBNode* minimum(RBNode* w);
+    RBNode* minimum(RBNode*);
 
     /**
      * successor(w) returns the successor of node w in the
      * RB-tree to which node w belongs
      */
-    RBNode* successor(RBNode* w);
+    RBNode* successor(RBNode*);
 
-    RBNode* predecessor(RBNode* w);
+    RBNode* predecessor(RBNode*);
 
     /**
      * RBInsert(z) inserts node z in this RB-tree
      */
-    void RBInsert(RBNode* z);
+    void RBInsert(RBNode*);
 
-    RBNode* del(RBNode* z);
+    RBNode* del(RBNode*);
 
-    void RBDeleteFixup(RBNode* x);
+    void RBDeleteFixup(RBNode*);
 
-    void RBInsertFixup(RBNode* z);
+    void RBInsertFixup(RBNode*);
 
-    void inorder(RBNode* T);
+    int inorder(RBNode*, int);
 
     void inorder();
+
+    int rinorder(RBNode*, int);
+
+    void rinorder();
 
     void bfs();
 };
