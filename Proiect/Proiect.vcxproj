@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cosmetice.cpp" />
+    <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Medicament.cpp" />
     <ClCompile Include="Meniu.cpp" />
@@ -153,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cosmetice.h" />
+    <ClInclude Include="HashNode.h" />
+    <ClInclude Include="HashTable.h" />
     <ClInclude Include="Medicament.h" />
     <ClInclude Include="Meniu.h" />
     <ClInclude Include="Naturiste.h" />

@@ -70,5 +70,5 @@ public:
 
     void rinorder();
 
-    void bfs();
+    //void bfs();
 };

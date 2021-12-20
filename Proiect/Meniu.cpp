@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include "RBTree.h"
+#include "HashTable.h"
 #include "Produs.h"
 using std::cin;
 using std::cout;
@@ -177,51 +178,59 @@ void revenire_meniu() {
     print_menu();
 }
 
-void menu()
-{
+void menu(){
+
+    RBTree* tree = new RBTree();
+    HashTable* dict = new HashTable();
+
     string optiune;
     bool ok = true;
+    
     print_menu();
-    RBTree* tree = new RBTree();
-    Produs::initializare(tree);
+
+    Produs::initializare(tree, dict);
+    
     do {
         cin >> optiune;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         switch (conversie(optiune)) {
         case string_code::zero:
             ok = false;
-            Produs::salvare_date(tree);
+            Produs::salvare_date(tree, dict);
+
             delete tree;
+            delete dict;
+
             cout << "\u001b[32mDatele au fost salvate in fisier!\u001b[0m\n";
             break;
         case string_code::one:
             system("cls");
             cout << "\x1B[96mLista de produse\033[0m\n\n";
-            Produs::afisare(tree);
+            Produs::afisare(tree, dict);
             revenire_meniu();
             break;
         case string_code::two:
             system("cls");
             cout << "\x1B[96mAdaugare produs\033[0m\n\n";
-            Produs::adaugare(tree);
+            Produs::adaugare(tree, dict);
             revenire_meniu();
             break;
         case string_code::three:
             system("cls");
             cout << "\x1B[96mModificare produs\033[0m\n\n";
-            Produs::modificare(tree);
+            Produs::modificare(tree, dict);
             revenire_meniu();
             break;
         case string_code::four:
             system("cls");
             cout << "\x1B[96mStergere produs\033[0m\n\n";
-            Produs::stergere(tree);
+            Produs::stergere(tree, dict);
             revenire_meniu();
             break;
         case string_code::five:
             system("cls");
             cout << "\x1B[96mCautare produs\033[0m\n\n";
-            Produs::cautare(tree);
+            Produs::cautare(tree, dict);
             revenire_meniu();
             break;
         case string_code::six:

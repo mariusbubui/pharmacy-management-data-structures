@@ -1,9 +1,9 @@
 8
-Tableta;Nurofen;Reckitt;35;Ibuprofen;DA;400
-Unguent;Fucidin;Leo;20;Acid fusidic;NU;12
-Produs;Servetele;Zewa;3
-Medicament;Breezhaler;Atectura;40;Indacaterol;DA
-Cosmetic;Gel purifiant;Effaclar;55;Fata
-Produs;Scutec;Pampers;15
-Naturist;Spirulina;Hofigal;80;Energizant
-Sirop;Calmotusin;Alevia;15;Helichrysum;NU;12.75
+Tableta;Nurofen;Reckitt;35;Ibuprofen;DA;400;1
+Unguent;Fucidin;Leo;20;Acid fusidic;NU;12;1
+Produs;Servetele;Zewa;3;1
+Medicament;Breezhaler;Atectura;40;Indacaterol;DA;0
+Cosmetic;Gel purifiant;Effaclar;55;Fata;1
+Produs;Scutec;Pampers;15;1
+Naturist;Spirulina;Hofigal;80;Energizant;0
+Sirop;Calmotusin;Alevia;15;Helichrysum;NU;12.75;1

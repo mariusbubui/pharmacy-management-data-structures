@@ -1,5 +1,6 @@
 #pragma once
 #include "RBTree.h"
+#include "HashTable.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -20,15 +21,15 @@ public:
 	virtual ~Produs() {};
 	friend ostream& operator<<(ostream&, const Produs&);
 
-	static void initializare(RBTree*);
-	static void adaugare(RBTree*);
-	static void modificare(RBTree*);
-	static void stergere(RBTree*);
-	static void afisare(RBTree*);
-	static void cautare(RBTree*);
+	static void initializare(RBTree*, HashTable*);
+	static void adaugare(RBTree*, HashTable*);
+	static void modificare(RBTree*, HashTable*);
+	static void stergere(RBTree*, HashTable*);
+	static void afisare(RBTree*, HashTable*);
+	static void cautare(RBTree*, HashTable*);
 	static void sortare(RBTree*, bool (*comparator)(Produs*, Produs*));
 	static bool filtrare(RBTree*, string, bool (*filter)(Produs*, string));
-	static void salvare_date(RBTree*);
+	static void salvare_date(RBTree*, HashTable*);
 	static bool pret1(Produs*, Produs*);
 	static bool pret2(Produs*, Produs*);
 	static bool filter_producator(Produs*, string);

@@ -340,7 +340,7 @@ void RBTree::rinorder()
         rinorder(root, 0);
 }
 
-void RBTree::bfs(){
+/*void RBTree::bfs() {
     int i = 0;
     queue<RBNode*> q;
     q.push(root);
@@ -354,4 +354,4 @@ void RBTree::bfs(){
         if (node->right != RBNode::Nil)
             q.push(node->right);
     }
-}
+}*/
