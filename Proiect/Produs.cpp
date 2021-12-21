@@ -560,6 +560,25 @@ void Produs::cautare(RBTree* tree, HashTable* dict) {
 		cout << "\u001b[31mProdusul cautat nu exista!\u001b[0m\n";
 }
 
+void Produs::disponibilitate(HashTable* dict){
+	string nume;
+
+	cout << "Introduceti denumirea produsului: ";
+	while (true) {
+		getline(cin, nume); transform(nume.begin(), nume.end(), nume.begin(), tolower); nume[0] = (char)toupper(nume[0]);
+		if (nume.size())
+			break;
+		cout << "Denumirea produsului: ";
+	}
+
+	if (dict->get(nume) == true)
+		cout << "Produsul este disponibil!\n";
+	else if (dict->get(nume) == false)
+		cout << "Produsul nu este disponibil!\n";
+	else
+		cout << "\u001b[31mProdusul cautat nu exista!\u001b[0m\n";
+}
+
 void Produs::salvare_date(RBTree* tree, HashTable* dict) {
 	queue<RBNode*> q;
 	string eliberare;

@@ -12,7 +12,7 @@ using std::cout;
 using std::vector;
 using std::string;
 
-enum class string_code { zero, one, two, three, four, five, six, seven, err };
+enum class string_code { zero, one, two, three, four, five, six, seven, eight, err };
 
 string_code conversie(string const& s) {
     if (s == "0") return string_code::zero;
@@ -23,6 +23,7 @@ string_code conversie(string const& s) {
     if (s == "5") return string_code::five;
     if (s == "6") return string_code::six;
     if (s == "7") return string_code::seven;
+    if (s == "8") return string_code::eight;
     return string_code::err;
 }
 
@@ -32,12 +33,13 @@ void print_menu()
     cout << " ____________________________ \n";
     cout << "|                            |\n";
     cout << "|  (\x1B[96m1\033[0m). Afisare produse      |\n";
-    cout << "|  (\x1B[96m2\033[0m). Adaugare produs      |\n";
-    cout << "|  (\x1B[96m3\033[0m). Modificare produs    |\n";
-    cout << "|  (\x1B[96m4\033[0m). Stergere produs      |\n";
-    cout << "|  (\x1B[96m5\033[0m). Cautare produs       |\n";
-    cout << "|  (\x1B[96m6\033[0m). Filtrare produse     |\n";
-    cout << "|  (\x1B[96m7\033[0m). Sortare produse      |\n";
+    cout << "|  (\x1B[96m2\033[0m). Cautare produs       |\n";
+    cout << "|  (\x1B[96m3\033[0m). Disponibilitate      |\n";
+    cout << "|  (\x1B[96m4\033[0m). Adaugare produs      |\n";
+    cout << "|  (\x1B[96m5\033[0m). Modificare produs    |\n";
+    cout << "|  (\x1B[96m6\033[0m). Stergere produs      |\n";
+    cout << "|  (\x1B[96m7\033[0m). Filtrare produse     |\n";
+    cout << "|  (\x1B[96m8\033[0m). Sortare produse      |\n";
     cout << "|  (\x1B[96m0\033[0m). Iesire               |\n";
     cout << "|____________________________|\n\n";
     cout << "Introduceti o optiune: ";
@@ -211,34 +213,40 @@ void menu(){
             break;
         case string_code::two:
             system("cls");
+            cout << "\x1B[96mCautare produs\033[0m\n\n";
+            Produs::cautare(tree, dict);
+            revenire_meniu();
+            break;
+        case string_code::three:
+            system("cls");
+            cout << "\x1B[96mVerificare disponibilitate\033[0m\n\n";
+            Produs::disponibilitate(dict);
+            revenire_meniu();
+            break;
+        case string_code::four:
+            system("cls");
             cout << "\x1B[96mAdaugare produs\033[0m\n\n";
             Produs::adaugare(tree, dict);
             revenire_meniu();
             break;
-        case string_code::three:
+        case string_code::five:
             system("cls");
             cout << "\x1B[96mModificare produs\033[0m\n\n";
             Produs::modificare(tree, dict);
             revenire_meniu();
             break;
-        case string_code::four:
+        case string_code::six:
             system("cls");
             cout << "\x1B[96mStergere produs\033[0m\n\n";
             Produs::stergere(tree, dict);
             revenire_meniu();
             break;
-        case string_code::five:
-            system("cls");
-            cout << "\x1B[96mCautare produs\033[0m\n\n";
-            Produs::cautare(tree, dict);
-            revenire_meniu();
-            break;
-        case string_code::six:
+        case string_code::seven:
             system("cls");
             submenu_filter(tree);
             revenire_meniu();
             break;
-        case string_code::seven:
+        case string_code::eight:
             system("cls");
             submenu_sort(tree);
             revenire_meniu();

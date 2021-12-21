@@ -14,7 +14,7 @@ public:
 	int hashCode(string);
 	void insert(string, bool);
 	bool del(string);
-	bool get(string);
+	int get(string);
 	int sizeOfTable();
 	bool isEmpty();
 };

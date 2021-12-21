@@ -27,6 +27,7 @@ public:
 	static void stergere(RBTree*, HashTable*);
 	static void afisare(RBTree*, HashTable*);
 	static void cautare(RBTree*, HashTable*);
+	static void disponibilitate(HashTable*);
 	static void sortare(RBTree*, bool (*comparator)(Produs*, Produs*));
 	static bool filtrare(RBTree*, string, bool (*filter)(Produs*, string));
 	static void salvare_date(RBTree*, HashTable*);

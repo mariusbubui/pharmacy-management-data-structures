@@ -28,6 +28,7 @@ HashTable::~HashTable(){
 		delete array[i];
 
 	delete[] array;
+	delete dummy;
 }
 
 int HashTable::hashCode(string key){
@@ -69,12 +70,12 @@ bool HashTable::del(string key){
 	}
 }
 
-bool HashTable::get(string key){
+int HashTable::get(string key){
 	int index = hashCode(key), k = 0;
 
 	while (array[index]) {
 		if (k++ > capacity)
-			return NULL;
+			return -1;
 
 		if (array[index]->key == key)
 			return array[index]->value;
@@ -83,7 +84,7 @@ bool HashTable::get(string key){
 		index %= capacity;
 	}
 
-	return NULL;
+	return -1;
 }
 
 int HashTable::sizeOfTable(){
