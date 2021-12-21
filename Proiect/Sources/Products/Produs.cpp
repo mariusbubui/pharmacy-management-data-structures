@@ -1,11 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-#include "Produs.h"
-#include "Cosmetice.h"
-#include "Naturiste.h"
-#include "Medicament.h"
-#include "Tableta.h"
-#include "Sirop.h"
-#include "Unguent.h"
+#include "../../Headers/Products/Produs.h"
+#include "../../Headers/Products/Cosmetice.h"
+#include "../../Headers/Products/Naturiste.h"
+#include "../../Headers/Products/Medicament.h"
+#include "../../Headers/Products/Tableta.h"
+#include "../../Headers/Products/Sirop.h"
+#include "../../Headers/Products/Unguent.h"
 #include <fstream>
 #include <algorithm>
 #include <ios>
@@ -38,7 +38,7 @@ ostream& Produs::afisare(ostream& st) const {
 }
 
 void Produs::initializare(RBTree* tree, HashTable* dict) {
-	ifstream in("produse.txt");
+	ifstream in("Resources/produse.txt");
 	if (!in.is_open())
 		return;
 
@@ -582,7 +582,7 @@ void Produs::disponibilitate(HashTable* dict){
 void Produs::salvare_date(RBTree* tree, HashTable* dict) {
 	queue<RBNode*> q;
 	string eliberare;
-	ofstream out("produse.txt");
+	ofstream out("Resources/produse.txt");
 	int n = tree->nodes;
 
 	q.push(tree->root);

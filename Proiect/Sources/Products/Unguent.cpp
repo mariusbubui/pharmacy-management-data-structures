@@ -1,4 +1,4 @@
-#include "Unguent.h"
+#include "../../Headers/Products/Unguent.h"
 
 ostream& Unguent::afisare(ostream& st) const {
 	st << "Unguent\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << " RON\nSubstanta activa: " << substanta_activa << "\nPresciptie medicala: ";

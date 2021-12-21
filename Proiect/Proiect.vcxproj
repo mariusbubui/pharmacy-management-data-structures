@@ -139,35 +139,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cosmetice.cpp" />
-    <ClCompile Include="HashTable.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Medicament.cpp" />
-    <ClCompile Include="Meniu.cpp" />
-    <ClCompile Include="Naturiste.cpp" />
-    <ClCompile Include="Produs.cpp" />
-    <ClCompile Include="RBNode.cpp" />
-    <ClCompile Include="RBTree.cpp" />
-    <ClCompile Include="Sirop.cpp" />
-    <ClCompile Include="Tableta.cpp" />
-    <ClCompile Include="Unguent.cpp" />
+    <Text Include="Resources\produse.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cosmetice.h" />
-    <ClInclude Include="HashNode.h" />
-    <ClInclude Include="HashTable.h" />
-    <ClInclude Include="Medicament.h" />
-    <ClInclude Include="Meniu.h" />
-    <ClInclude Include="Naturiste.h" />
-    <ClInclude Include="Produs.h" />
-    <ClInclude Include="RBNode.h" />
-    <ClInclude Include="RBTree.h" />
-    <ClInclude Include="Sirop.h" />
-    <ClInclude Include="Tableta.h" />
-    <ClInclude Include="Unguent.h" />
+    <ClCompile Include="Sources\DataStructures\HashTable.cpp" />
+    <ClCompile Include="Sources\DataStructures\RBNode.cpp" />
+    <ClCompile Include="Sources\DataStructures\RBTree.cpp" />
+    <ClCompile Include="Sources\Menu\Main.cpp" />
+    <ClCompile Include="Sources\Menu\Meniu.cpp" />
+    <ClCompile Include="Sources\Products\Cosmetice.cpp" />
+    <ClCompile Include="Sources\Products\Medicament.cpp" />
+    <ClCompile Include="Sources\Products\Naturiste.cpp" />
+    <ClCompile Include="Sources\Products\Produs.cpp" />
+    <ClCompile Include="Sources\Products\Sirop.cpp" />
+    <ClCompile Include="Sources\Products\Tableta.cpp" />
+    <ClCompile Include="Sources\Products\Unguent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="produse.txt" />
+    <ClInclude Include="Headers\DataStructures\HashNode.h" />
+    <ClInclude Include="Headers\DataStructures\HashTable.h" />
+    <ClInclude Include="Headers\DataStructures\RBNode.h" />
+    <ClInclude Include="Headers\DataStructures\RBTree.h" />
+    <ClInclude Include="Headers\Menu\Meniu.h" />
+    <ClInclude Include="Headers\Products\Cosmetice.h" />
+    <ClInclude Include="Headers\Products\Medicament.h" />
+    <ClInclude Include="Headers\Products\Naturiste.h" />
+    <ClInclude Include="Headers\Products\Produs.h" />
+    <ClInclude Include="Headers\Products\Sirop.h" />
+    <ClInclude Include="Headers\Products\Tableta.h" />
+    <ClInclude Include="Headers\Products\Unguent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-#include "Cosmetice.h"
+#include "../../Headers/Products/Cosmetice.h"
 
 ostream& Cosmetice::afisare(ostream& st) const{
 	st << "Produs cosmetic\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << "  RON\nZona de aplicare: " << zona_aplicare << "\n";

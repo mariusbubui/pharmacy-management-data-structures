@@ -1,4 +1,4 @@
-#include "HashTable.h"
+#include "../../Headers/DataStructures/HashTable.h"
 
 void HashTable::resize(){
 	capacity *= 2;

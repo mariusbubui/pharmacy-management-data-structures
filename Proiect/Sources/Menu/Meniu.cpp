@@ -4,9 +4,10 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "RBTree.h"
-#include "HashTable.h"
-#include "Produs.h"
+#include "../../Headers/DataStructures/RBTree.h"
+#include "../../Headers/DataStructures/HashTable.h"
+#include "../../Headers/Products/Produs.h"
+
 using std::cin;
 using std::cout;
 using std::vector;
