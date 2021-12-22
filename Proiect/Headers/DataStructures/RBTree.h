@@ -69,6 +69,4 @@ public:
     int rinorder(RBNode*, int);
 
     void rinorder();
-
-    //void bfs();
 };

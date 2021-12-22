@@ -1,4 +1,4 @@
-#include "../../Headers/Products/Medicament.h"
+#include "../Headers/Products/Medicament.h"
 
 ostream& Medicament::afisare(ostream& st) const{
 	st << "Medicament\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << " RON\nSubstanta activa: " << substanta_activa << "\nPresciptie medicala: ";

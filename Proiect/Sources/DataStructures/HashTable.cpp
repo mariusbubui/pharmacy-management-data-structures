@@ -1,4 +1,4 @@
-#include "../../Headers/DataStructures/HashTable.h"
+#include "DataStructures/HashTable.h"
 
 void HashTable::resize(){
 	capacity *= 2;
@@ -68,6 +68,8 @@ bool HashTable::del(string key){
 		index++;
 		index %= capacity;
 	}
+
+	return NULL;
 }
 
 int HashTable::get(string key){

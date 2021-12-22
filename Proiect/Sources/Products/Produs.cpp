@@ -1,11 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-#include "../../Headers/Products/Produs.h"
-#include "../../Headers/Products/Cosmetice.h"
-#include "../../Headers/Products/Naturiste.h"
-#include "../../Headers/Products/Medicament.h"
-#include "../../Headers/Products/Tableta.h"
-#include "../../Headers/Products/Sirop.h"
-#include "../../Headers/Products/Unguent.h"
+
+#include "Products/Produs.h"
+#include "Products/Cosmetice.h"
+#include "Products/Naturiste.h"
+#include "Products/Medicament.h"
+#include "Products/Tableta.h"
+#include "Products/Sirop.h"
+#include "Products/Unguent.h"
 #include <fstream>
 #include <algorithm>
 #include <ios>
@@ -38,7 +39,7 @@ ostream& Produs::afisare(ostream& st) const {
 }
 
 void Produs::initializare(RBTree* tree, HashTable* dict) {
-	ifstream in("Resources/produse.txt");
+	ifstream in("Resources/products.txt");
 	if (!in.is_open())
 		return;
 
@@ -105,7 +106,6 @@ void Produs::initializare(RBTree* tree, HashTable* dict) {
 void Produs::adaugare(RBTree* tree, HashTable* dict) {
 	string tip, nume, producator, aux1, aux2, disp;
 	int pret, gramaj, val;
-	bool disponibilitate;
 	double c;
 
 	cout << "Introduceti tipul produsului(PRODUS/COSMETICE/NATURISTE/MEDICAMENT/TABLETA/SIROP/UNGUENT): ";
@@ -571,7 +571,7 @@ void Produs::disponibilitate(HashTable* dict){
 		cout << "Denumirea produsului: ";
 	}
 
-	if (dict->get(nume) == true)
+	if (dict->get(nume) == 1)
 		cout << "Produsul este disponibil!\n";
 	else if (dict->get(nume) == false)
 		cout << "Produsul nu este disponibil!\n";
@@ -582,7 +582,7 @@ void Produs::disponibilitate(HashTable* dict){
 void Produs::salvare_date(RBTree* tree, HashTable* dict) {
 	queue<RBNode*> q;
 	string eliberare;
-	ofstream out("Resources/produse.txt");
+	ofstream out("Resources/products.txt");
 	int n = tree->nodes;
 
 	q.push(tree->root);

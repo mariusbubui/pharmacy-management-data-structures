@@ -1,4 +1,4 @@
-#include "../../Headers/Products/Naturiste.h"
+#include "../Headers/Products/Naturiste.h"
 
 ostream& Naturiste::afisare(ostream& st) const{
 	st << "Produs naturist\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << " RON\nActiunea produsului: " << utilizare << "\n";

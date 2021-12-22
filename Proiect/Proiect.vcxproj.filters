@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Resources\produse.txt">
+    <Text Include="Resources\products.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

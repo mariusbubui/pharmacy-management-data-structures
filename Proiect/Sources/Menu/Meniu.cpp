@@ -1,21 +1,23 @@
 #define _CRT_SECURE_NO_WARNINGS 1
+
 #include <iostream>
 #include <conio.h>
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "../../Headers/DataStructures/RBTree.h"
-#include "../../Headers/DataStructures/HashTable.h"
-#include "../../Headers/Products/Produs.h"
+#include "../Headers/DataStructures/HashTable.h"
+#include "../Headers/Products/Produs.h"
+#include "../Headers/Menu/Meniu.h"
 
 using std::cin;
 using std::cout;
 using std::vector;
 using std::string;
+using std::for_each;
 
 enum class string_code { zero, one, two, three, four, five, six, seven, eight, err };
 
-string_code conversie(string const& s) {
+string_code conversion(string const& s) {
     if (s == "0") return string_code::zero;
     if (s == "1") return string_code::one;
     if (s == "2") return string_code::two;
@@ -28,8 +30,7 @@ string_code conversie(string const& s) {
     return string_code::err;
 }
 
-void print_menu()
-{
+void show_menu(){
     cout << "\x1B[96mManagment produse farmacie\033[0m\n\n";
     cout << " ____________________________ \n";
     cout << "|                            |\n";
@@ -46,7 +47,7 @@ void print_menu()
     cout << "Introduceti o optiune: ";
 }
 
-void print_submenusort() {
+void show_submenusort() {
     cout << "\x1B[96mSortare produse\033[0m\n";
     cout << " ________________________________________________\n";
     cout << "|                                                |\n";
@@ -59,7 +60,7 @@ void print_submenusort() {
     cout << "Introduceti o optiune: ";
 }
 
-void print_submenufil() {
+void show_submenufil() {
     cout << "\x1B[96mFiltrare produse\033[0m\n";
     cout << " ________________________________________\n";
     cout << "|                                        |\n";
@@ -73,50 +74,42 @@ void print_submenufil() {
 void submenu_sort(RBTree* tree) {
     string optiune;
     bool ok = true;
-    print_submenusort();
+
+    show_submenusort();
+
     do {
         cin >> optiune;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        switch (conversie(optiune)) {
+
+        switch (conversion(optiune)) {
         case string_code::zero:
             ok = false;
             break;
+
         case string_code::one:
-            system("cls");
-            cout << "\x1B[96mProdusele sortate crescator dupa pret:\033[0m\n\n";
+            clear_screen("Produsele sortate crescator dupa pret:");
             Produs::sortare(tree, Produs::pret1);
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenusort();
+            return_menu(show_submenusort);
             break;
+
         case string_code::two:
-            system("cls");
-            cout << "\x1B[96mProdusele sortate descrescator dupa pret:\033[0m\n\n";
+            clear_screen("Produsele sortate descrescator dupa pret:");
             Produs::sortare(tree, Produs::pret2);
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenusort();
+            return_menu(show_submenusort);
             break;
+
         case string_code::three:
-            system("cls");
-            cout << "\x1B[96mProdusele sortate alfabetic dupa denumire:\033[0m\n\n";
+            clear_screen("Produsele sortate alfabetic dupa denumire:");
             tree->inorder();
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenusort();
+            return_menu(show_submenusort);
             break;
+
         case string_code::four:
-            system("cls");
-            cout << "\x1B[96mProdusele sortate invers alfabetic dupa denumire:\033[0m\n\n";
+            clear_screen("Produsele sortate invers alfabetic dupa denumire:");
             tree->rinorder();
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenusort();
+            return_menu(show_submenusort);
             break;
+
         default:
             cout << "Introduceti o optiune corecta: ";
         }
@@ -126,132 +119,146 @@ void submenu_sort(RBTree* tree) {
 void submenu_filter(RBTree* tree) {
     string optiune, aux;
     bool ok = true, digit = true;
-    print_submenufil();
+
+    show_submenufil();
+
     do {
         cin >> optiune;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        switch (conversie(optiune)) {
+
+        switch (conversion(optiune)) {
         case string_code::zero:
             ok = false;
             break;
+
         case string_code::one:
             cout << "Introduceti pretul dupa care sa se filtreaze: ";
             do {
-                digit = true;
-                getline(cin, aux);
+                digit = true; getline(cin, aux);
+
                 if (aux[0] == '0')
                     digit = false;
                 for (unsigned int i = 0; i < aux.size() && digit; i++)
                     if (!isdigit(aux[i]))
                         digit = false;
+
                 if (!digit)
                     cout << "\u001b[31mIntroduceti un pret valid: \u001b[0m";
             } while (!digit);
-            system("cls");
-            cout << "\x1B[96mProdusele cu pretul " << aux << " RON:\033[0m\n\n";
+
+            clear_screen("Produsele cu pretul de " + aux + " RON:");
+
             if (!Produs::filtrare(tree, aux, Produs::filter_pret))
                 cout << "\u001b[31mNu exista produse cu acest pret!\u001b[0m\n";
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenufil();
+
+            return_menu(show_submenufil);
             break;
+
         case string_code::two:
             cout << "Introduceti producatorul dupa care sa se filtreaze: ";
-            getline(cin, aux);  std::transform(aux.begin(), aux.end(), aux.begin(), tolower); aux[0] = (char)toupper(aux[0]);
-            system("cls");
-            cout << "\x1B[96mProdusele cu producatorul " << aux << ":\033[0m\n\n";
+            getline(cin, aux); for_each(aux.begin(), aux.end(), tolower); aux[0] = (char)toupper(aux[0]);
+
+            clear_screen("Produsele cu producatorul " + aux + ":");
+
             if (!Produs::filtrare(tree, aux, Produs::filter_producator))
                 cout << "\u001b[31mNu exista produse de la acest producator!\u001b[0m\n";
-            printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
-            (void)_getch();
-            system("cls");
-            print_submenufil();
+        
+            return_menu(show_submenufil);
             break;
+
         default:
             cout << "Introduceti o optiune corecta: ";
         }
     } while (ok);
 }
 
-void revenire_meniu() {
+void clear_screen(string const text) {
+    system("cls");
+    cout << "\x1B[96m" << text << "\033[0m\n\n";
+}
+
+void return_menu(void (*show)()) {
     printf("\n\x1B[96mApasati o tasta pentru a continua...\033[0m");
     (void)_getch();
     system("cls");
-    print_menu();
+    show();
 }
 
-void menu(){
-
+void menu() {
     RBTree* tree = new RBTree();
     HashTable* dict = new HashTable();
 
     string optiune;
     bool ok = true;
-    
-    print_menu();
+
+    show_menu();
 
     Produs::initializare(tree, dict);
-    
+
     do {
         cin >> optiune;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        switch (conversie(optiune)) {
+
+        switch (conversion(optiune)) {
         case string_code::zero:
             ok = false;
+
             Produs::salvare_date(tree, dict);
+            cout << "\u001b[32mDatele au fost salvate in fisier!\u001b[0m\n";
 
             delete tree;
             delete dict;
 
-            cout << "\u001b[32mDatele au fost salvate in fisier!\u001b[0m\n";
             break;
+
         case string_code::one:
-            system("cls");
-            cout << "\x1B[96mLista de produse\033[0m\n\n";
+            clear_screen("Lista de produse");
             Produs::afisare(tree, dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::two:
-            system("cls");
-            cout << "\x1B[96mCautare produs\033[0m\n\n";
+            clear_screen("Cautare produs");
             Produs::cautare(tree, dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::three:
-            system("cls");
-            cout << "\x1B[96mVerificare disponibilitate\033[0m\n\n";
+            clear_screen("Verificare disponibilitate");
             Produs::disponibilitate(dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::four:
-            system("cls");
-            cout << "\x1B[96mAdaugare produs\033[0m\n\n";
+            clear_screen("Adaugare produs");
             Produs::adaugare(tree, dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::five:
-            system("cls");
-            cout << "\x1B[96mModificare produs\033[0m\n\n";
+            clear_screen("Modificare produs");
             Produs::modificare(tree, dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::six:
-            system("cls");
-            cout << "\x1B[96mStergere produs\033[0m\n\n";
+            clear_screen("Stergere produs");
             Produs::stergere(tree, dict);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::seven:
             system("cls");
             submenu_filter(tree);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         case string_code::eight:
             system("cls");
             submenu_sort(tree);
-            revenire_meniu();
+            return_menu(show_menu);
             break;
+
         default:
             cout << "Introduceti o optiune corecta: ";
         }

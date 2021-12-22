@@ -1,4 +1,4 @@
-#include "../../Headers/Products/Sirop.h"
+#include "../Headers/Products/Sirop.h"
 
 ostream& Sirop::afisare(ostream& st) const {
 	st << "Sirop\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << " RON\nSubstanta activa: " << substanta_activa << "\nPresciptie medicala: ";

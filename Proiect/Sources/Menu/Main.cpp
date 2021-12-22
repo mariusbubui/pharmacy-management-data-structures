@@ -1,5 +1,5 @@
 #include <crtdbg.h>
-#include "../../Headers/Menu/Meniu.h"
+#include "../Headers/Menu/Meniu.h"
 
 int main() {
 	menu();

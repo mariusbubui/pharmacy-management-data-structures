@@ -1,6 +1,6 @@
 #pragma once
-#include "../DataStructures/RBTree.h"
-#include "../DataStructures/HashTable.h"
+#include "DataStructures/RBTree.h"
+#include "DataStructures/HashTable.h"
 #include <iostream>
 #include <vector>
 #include <string>

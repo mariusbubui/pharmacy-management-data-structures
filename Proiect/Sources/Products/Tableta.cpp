@@ -1,4 +1,4 @@
-#include "../../Headers/Products/Tableta.h"
+#include "../Headers/Products/Tableta.h"
 
 ostream& Tableta::afisare(ostream& st) const {
 	st << "Tableta\nDenumire: " << denumire << "\nProducator: " << producator << "\nPret: " << pret << " RON\nSubstanta activa: " << substanta_activa << "\nPresciptie medicala: ";
