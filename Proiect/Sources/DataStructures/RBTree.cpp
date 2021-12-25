@@ -5,32 +5,24 @@
 using std::cout;
 using std::queue;
 
-RBTree::RBTree(){
+RBTree::RBTree() {
     RBNode::Nil = new RBNode(nullptr);
     root = RBNode::Nil;
     nodes = 0;
 }
 
-RBTree::RBTree(Produs* p) {
-    RBNode::Nil = new RBNode(nullptr);
-    root = new RBNode(p);
-    nodes = 1;
-}
-
-RBTree::~RBTree(){
+RBTree::~RBTree() {
     delete RBNode::Nil;
     delete root;
 }
 
-void RBTree::LeftRotate(RBNode* x)
-{
-    // Set y
+void RBTree::LeftRotate(RBNode* x) {
     RBNode* y = x->right;
-    // Turn y's left subtree into x's right subtree
+
     x->right = y->left;
     if (y->left != RBNode::Nil)
         y->left->p = x;
-    // link x's parent to y
+
     y->p = x->p;
     if (x->p == RBNode::Nil)
         root = y;
@@ -38,20 +30,18 @@ void RBTree::LeftRotate(RBNode* x)
         x->p->left = y;
     else
         x->p->right = y;
-    // Put x on y's left
+
     y->left = x;
     x->p = y;
 }
 
-void RBTree::RightRotate(RBNode* y)
-{
-    // Set x
+void RBTree::RightRotate(RBNode* y) {
     RBNode* x = y->left;
-    // Turn x's right subtree into y's left subtree
+
     y->left = x->right;
     if (x->right != RBNode::Nil)
         x->right->p = y;
-    // link y's parent to x
+
     x->p = y->p;
     if (y->p == RBNode::Nil)
         root = x;
@@ -59,30 +49,26 @@ void RBTree::RightRotate(RBNode* y)
         y->p->left = x;
     else
         y->p->right = x;
-    // Put y on x's right
+
     x->right = y;
     y->p = x;
 }
 
-RBNode* RBTree::createNode(Produs* p)
-{
+RBNode* RBTree::createNode(Produs* p) {
     return new RBNode(p);
 }
 
-bool RBTree::isNil(RBNode* n)
-{
+bool RBTree::isNil(RBNode* n) {
     return (n == RBNode::Nil);
 }
 
-RBNode* RBTree::search(RBNode* w, string key)
-{
+RBNode* RBTree::search(RBNode* w, string key) {
     if (isNil(w) || w->key->getDenumire() == key)
         return w;
     return search((key < w->key->getDenumire()) ? w->left : w->right, key);
 }
 
-RBNode* RBTree::maximum(RBNode* w)
-{
+RBNode* RBTree::maximum(RBNode* w) {
     RBNode* x = w;
     while (!isNil(x->right))
         x = x->right;
@@ -149,54 +135,44 @@ void RBTree::RBInsert(RBNode* z)
     RBInsertFixup(z);
 }
 
-RBNode* RBTree::del(RBNode* z)
-{
+RBNode* RBTree::del(RBNode* z) {
     RBNode* y = (isNil(z->left) || isNil(z->right)) ? z : successor(z);
     RBNode* x = !isNil(y->left) ? y->left : y->right;
     x->p = y->p;
-    if (isNil(y->p))
-    {
+    if (isNil(y->p)) {
         root = x;
     }
-    else
-    {
+    else {
         if (y == y->p->left)
             y->p->left = x;
         else
             y->p->right = x;
     }
-    if (y != z)
-    {
+    if (y != z) {
         z->key = y->key;
-        // copy y's satellite data into z
     }
     if (y->col == RBNode::color::BLACK)
         RBDeleteFixup(x);
     return y;
 }
 
-void RBTree::RBDeleteFixup(RBNode* x)
-{
+void RBTree::RBDeleteFixup(RBNode* x) {
     RBNode* w;
-    while ((x != root) && (x->col == RBNode::color::BLACK))
-    {
+    while ((x != root) && (x->col == RBNode::color::BLACK)) {
         if (x == x->p->left)
         {
             w = x->p->right;
-            if (w->col == RBNode::color::RED)
-            {
+            if (w->col == RBNode::color::RED) {
                 w->col = RBNode::color::BLACK;
                 x->p->col = RBNode::color::RED;
                 LeftRotate(x->p);
                 w = x->p->right;
             }
-            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK))
-            {
+            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK)) {
                 w->col = RBNode::color::RED;
                 x = x->p;
             }
-            else
-            {
+            else {
                 if (w->right->col == RBNode::color::BLACK)
                 {
                     w->left->col = RBNode::color::BLACK;
@@ -211,24 +187,19 @@ void RBTree::RBDeleteFixup(RBNode* x)
                 x = root;
             }
         }
-        else
-        {
-            // same as 'then' clause with 'right' and 'left' exchanged
+        else {
             w = x->p->left;
-            if (w->col == RBNode::color::RED)
-            {
+            if (w->col == RBNode::color::RED) {
                 w->col = RBNode::color::BLACK;
                 x->p->col = RBNode::color::RED;
                 RightRotate(x->p);
                 w = x->p->left;
             }
-            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK))
-            {
+            if ((w->left->col == RBNode::color::BLACK) && (w->right->col == RBNode::color::BLACK)) {
                 w->col = RBNode::color::RED;
                 x = x->p;
             }
-            else
-            {
+            else {
                 if (w->left->col == RBNode::color::BLACK)
                 {
                     w->right->col = RBNode::color::BLACK;
@@ -298,31 +269,24 @@ void RBTree::RBInsertFixup(RBNode* z)
     root->col = RBNode::color::BLACK;
 }
 
-int RBTree::inorder(RBNode* T, int i)
-{
-    if (!isNil(T))
-    {
+int RBTree::inorder(RBNode* T, int i) {
+    if (!isNil(T)) {
         int j = inorder(T->left, i);
         cout << j << ". " << *(T->key) << '\n';
         return inorder(T->right, j);
     }
-    return i+1;
+    return i + 1;
 }
 
-void RBTree::inorder()
-{
+void RBTree::inorder() {
     if (isNil(root))
-    {
         cout << "empty";
-    }
     else
         inorder(root, 0);
 }
 
-int RBTree::rinorder(RBNode* T, int i)
-{
-    if (!isNil(T))
-    {
+int RBTree::rinorder(RBNode* T, int i) {
+    if (!isNil(T)) {
         int j = rinorder(T->right, i);
         cout << j << ". " << *(T->key) << '\n';
         return rinorder(T->left, j);
@@ -330,28 +294,9 @@ int RBTree::rinorder(RBNode* T, int i)
     return i + 1;
 }
 
-void RBTree::rinorder()
-{
+void RBTree::rinorder() {
     if (isNil(root))
-    {
         cout << "empty";
-    }
     else
         rinorder(root, 0);
 }
-
-/*void RBTree::bfs() {
-    int i = 0;
-    queue<RBNode*> q;
-    q.push(root);
-    while (q.empty() == false) {
-        i++;
-        RBNode* node = q.front();
-        cout << i << ". " << * node->key << '\n';
-        q.pop();
-        if (node->left != RBNode::Nil)
-            q.push(node->left);
-        if (node->right != RBNode::Nil)
-            q.push(node->right);
-    }
-}*/

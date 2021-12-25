@@ -11,6 +11,12 @@ using std::string;
 
 class RBTree;
 
+/**
+* Abstract implemenatation of a Produs
+*
+* Contains the name,price and the 
+* producer of the product.
+*/
 class Produs {
 protected:
 	string denumire, producator;

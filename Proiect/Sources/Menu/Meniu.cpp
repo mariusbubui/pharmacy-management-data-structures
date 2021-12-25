@@ -13,7 +13,7 @@ using std::cin;
 using std::cout;
 using std::vector;
 using std::string;
-using std::for_each;
+using std::transform;
 
 enum class string_code { zero, one, two, three, four, five, six, seven, eight, err };
 
@@ -156,7 +156,7 @@ void submenu_filter(RBTree* tree) {
 
         case string_code::two:
             cout << "Introduceti producatorul dupa care sa se filtreaze: ";
-            getline(cin, aux); for_each(aux.begin(), aux.end(), tolower); aux[0] = (char)toupper(aux[0]);
+            getline(cin, aux); transform(aux.begin(), aux.end(), aux.begin(), tolower); aux[0] = (char)toupper(aux[0]);
 
             clear_screen("Produsele cu producatorul " + aux + ":");
 
