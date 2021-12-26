@@ -10,3 +10,5 @@ This project offers its users the possibility to manage a pharmacy storage. It i
 
 The main data structure that I decided to use is a red-black tree due to its O(log n) worst time complexity for the base operations. It also allows me to get the products sorted
 after the key(their name) in linear time.
+
+To be able to get the availability of a product in constant time a hash table has been used. The key is the name of the product and the value is boolean, representing the availability.
