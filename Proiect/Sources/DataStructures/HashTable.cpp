@@ -3,18 +3,30 @@
 void HashTable::resize(){
 	capacity *= 2;
 	HashNode** newArray = new HashNode * [capacity];
+	int index;
 
-	memcpy(newArray, array, capacity * sizeof(HashNode*) / 2);
+	for (int i = 0; i < capacity; i++) {
+		newArray[i] = nullptr;
+	}
 
-	for (int i = 0; i < size; i++)
-		delete array[i];
+	for (int i = 0; i < capacity / 2; i++) {
+		index = hashCode(array[i]->key);
+
+		while (newArray[index] && newArray[index]->key != array[i]->key && newArray[index]->key != "") {
+			index++;
+			index %= capacity;
+		}
+
+		newArray[index] = array[i];
+	}
+
 	delete[] array;
 
 	array = newArray;
 }
 
 HashTable::HashTable(){
-	capacity = 20; size = 0;
+	capacity = 16; size = 0;
 	array = new HashNode * [capacity];
 	dummy = new HashNode("", false);
 
